@@ -5,7 +5,6 @@
 var debug = require('debug')('maze');
 var fine = require('debug')('maze:fine');
 
-
 var maze = [0, 1, 2, 3, 4, 5, 6]
 
 maze[0] = ['X', 'X', 'X', 'X', 'X', 'X', 'X']
@@ -23,7 +22,9 @@ phrases['c'] = "hello kitty"
 phrases['d'] = "wow, an agressive dog is lying here"
 phrases['?'] = "congrats you found the treasure"
 
-function tryMove(pos, direction) {
+var exports = module.exports = {};
+
+function tryMove (pos, direction) {
     debug(`trying ${direction}`)
     switch (direction) {
         case 'up':
@@ -38,20 +39,21 @@ function tryMove(pos, direction) {
             throw new Error("unknown direction");
     }
 }
+exports.tryMove = tryMove;
 
-function up(pos) {
+exports.up = function (pos) {
     return tryMove(pos, 'up');
 }
 
-function down(pos) {
+exports.down = function (pos) {
     return tryMove(pos, 'down');
 }
 
-function left(pos) {
+exports.left = function (pos) {
     return tryMove(pos, 'left');
 }
 
-function right(pos) {
+exports.right = function (pos) {
     return tryMove(pos, 'right');
 }
 
@@ -83,14 +85,15 @@ function _move(pos, x, y) {
     }
 }
 
-function look(pos) {
+function look (pos) {
     var x = pos[0]
     var y = pos[1]
     var thing = maze[x][y]
     return phrases[thing];
 }
+exports.look = look;
 
-function show(pos) {
+exports.show = function (pos) {
     var poster = ""
     for (y = 0; y < maze.length; y++) {
         var line = ""
@@ -107,39 +110,7 @@ function show(pos) {
     return poster
 }
 
-function pickInitialPosition() {
+exports.pickInitialPosition = function() {
     // TODO: make this random
     return [1, 5];
 }
-
-
-//
-// TEST MAZE
-// 
-var pos = pickInitialPosition()
-console.log(`starting from: ${pos}`)
-show(pos)
-
-// bumping a wall
-console.log('moving up')
-var move = up(pos)
-if (move.success) {
-    console.log("did went up :-)")
-}
-else {
-    console.log("stuck!")
-}
-
-
-// solution
-move = left(move.pos)
-move = left(move.pos)
-move = left(move.pos)
-move = down(move.pos)
-move = down(move.pos)
-move = left(move.pos)
-move = down(move.pos)
-move = down(move.pos)
-move = right(move.pos)
-move = right(move.pos)
-move = up(move.pos)
