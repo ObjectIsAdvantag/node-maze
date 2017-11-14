@@ -1,3 +1,10 @@
+//
+// Maze library
+//
+
+var debug = require('debug')('maze');
+var fine = require('debug')('maze:fine');
+
 
 var maze = [0, 1, 2, 3, 4, 5, 6]
 
@@ -17,22 +24,22 @@ phrases['D'] = "wow, an agressive dog is lying here"
 phrases['?'] = "congrats you found the treasure"
 
 function up(pos) {
-    console.log('trying up')
+    fine('trying up')
     return move(pos, -1, 0)
 }
 
 function down(pos) {
-    console.log('trying down')
+    fine('trying down')
     return move(pos, 1, 0)
 }
 
 function left(pos) {
-    console.log('trying left')
+    fine('trying left')
     return move(pos, 0, -1)
 }
 
 function right(pos) {
-    console.log('moving right')
+    fine('moving right')
     return move(pos, 0, 1)
 }
 
@@ -44,15 +51,15 @@ function move(pos, x, y) {
     let thing = maze[newX][newY]
 
     var story = phrases[thing]
-    console.log('> ' + story)
+    debug('> ' + story)
 
     switch (thing) {
         case 'X':
-            console.log(`still at: ${pos}`)
+            fine(`still at: ${pos}`)
             return pos;
         default:
             var newPos = [newX, newY]
-            console.log(`now at: ${newPos}`)
+            fine(`now at: ${newPos}`)
             return newPos
     }
 }
@@ -64,8 +71,37 @@ function look(pos) {
     return phrases[thing];
 }
 
+function show(pos) {
+    var poster = ""
+    for (y = 0; y < maze.length; y++) {
+        var line = ""
+        for (x = 0; x < maze[0].length; x++) {        
+            var char = maze[y][x]
+            if ((x==pos[0]) && y==pos[1]) {
+                char = 'Y'
+            }
+            line += char
+        }
+        poster += line + "\n"
+    }
+    debug("poster:\n" + poster)
+    return poster
+}
+
+function pickInitialPosition() {
+    // TODO: make this random
+    return [1, 5];
+}
+
+
+//
+// TEST MAZE
+// 
 var pos = [1, 5]
 console.log(`starting from: ${pos}`)
+show(pos)
+
+// bumping a wall
 pos = up(pos)
 
 // solution
@@ -80,4 +116,4 @@ pos = down(pos)
 pos = right(pos)
 pos = right(pos)
 pos = up(pos)
-look(pos)
+console.log(look(pos))
