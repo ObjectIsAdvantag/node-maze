@@ -1,6 +1,6 @@
 {
   "name": "maze",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Simple library to move around a maze",
   "main": "maze.js",
   "scripts": {
