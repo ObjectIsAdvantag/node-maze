@@ -1,8 +1,8 @@
 {
   "name": "maze",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Simple library to move around a maze",
-  "main": "maze.js",
+  "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
