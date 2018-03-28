@@ -40,6 +40,9 @@ var game = new Maze(structure, walls, phrases, scores, '?')
 game.pickInitialPosition('_')
 game.updateScore(1000)
 
+// Show map
+console.log("Map:\n" + game.buildMap());
+
 // Try directions
 var move = game.up();
 console.log(JSON.stringify(move));
